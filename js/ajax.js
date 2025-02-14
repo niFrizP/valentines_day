@@ -65,31 +65,26 @@ function initScratchCard() {
     }
 
     // Dibuja un círculo (pincel) en la posición dada
-    function drawLine(x, y) {
-        const brushWidth = 30; // Ajusta el grosor de la raya
-        ctx.lineWidth = brushWidth;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = 'rgba(0,0,0,1)'; // Color de raspado
+    function drawDot(x, y) {
+        const brushRadius = 20;
         ctx.beginPath();
-        ctx.moveTo(lastX, lastY);
-        ctx.lineTo(x, y);
-        ctx.stroke();
+        ctx.arc(x, y, brushRadius, 0, 2 * Math.PI, false);
+        ctx.fill();
     }
 
     // Funciones para manejar el "raspado"
     function scratchStart(e) {
         isDrawing = true;
         const pos = getBrushPos(e.clientX, e.clientY);
-        lastX = pos.x;
-        lastY = pos.y;
+        drawDot(pos.x, pos.y);
+        checkIfCleared();
     }
 
     function scratchMove(e) {
         if (!isDrawing) return;
+        e.preventDefault();
         const pos = getBrushPos(e.clientX, e.clientY);
-        drawLine(pos.x, pos.y, lastX, lastY);
-        lastX = pos.x;
-        lastY = pos.y;
+        drawDot(pos.x, pos.y);
         checkIfCleared();
     }
 
@@ -107,7 +102,7 @@ function initScratchCard() {
         isDrawing = true;
         const touch = e.touches[0];
         const pos = getBrushPos(touch.clientX, touch.clientY);
-        drawLine(pos.x, pos.y);
+        drawDot(pos.x, pos.y);
         checkIfCleared();
     });
     canvas.addEventListener('touchmove', function (e) {
@@ -115,7 +110,7 @@ function initScratchCard() {
         if (!isDrawing) return;
         const touch = e.touches[0];
         const pos = getBrushPos(touch.clientX, touch.clientY);
-        drawLine(pos.x, pos.y);
+        drawDot(pos.x, pos.y);
         checkIfCleared();
     });
     canvas.addEventListener('touchend', function () {
