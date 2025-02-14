@@ -141,6 +141,7 @@ document.getElementById('close-letter').addEventListener('click', function () {
 });
 
 
+
 /*********************************
  * Movimiento del mouse y efectos de fondo
  *********************************/
