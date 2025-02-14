@@ -1,7 +1,7 @@
 document.addEventListener('mousemove', (e) => {
     document.body.style.setProperty('--x', e.clientX / window.innerWidth);
     document.body.style.setProperty('--y', e.clientY / window.innerHeight);
-})
+});
 
 /********************
  * Corazones animados
@@ -18,7 +18,6 @@ function createHeart() {
         heart.remove();
     }, parseFloat(heart.style.animationDuration) * 1000);
 }
-// Crea un corazón cada 500ms
 setInterval(createHeart, 400);
 
 /*********************************
@@ -26,36 +25,30 @@ setInterval(createHeart, 400);
  *********************************/
 const card = document.getElementById('card');
 card.addEventListener('click', function () {
-    // Gira la tarjeta
     this.classList.add('flipped');
     setTimeout(() => {
         document.getElementById('card-container').style.display = 'none';
         document.getElementById('scratch-card').style.display = 'block';
         initScratchCard();
-    }, 1000); // 1 segundo (igual que la duración de la transición)
+    }, 1000);
 });
 
 /*********************************
- * Efecto scratch (raspa para revelar foto)
+ * Efecto scratch mejorado
  *********************************/
 function initScratchCard() {
     const canvas = document.getElementById('scratch-canvas');
     const img = document.getElementById('scratch-photo');
-    // Ajusta el tamaño del canvas al de la imagen
     canvas.width = img.width;
     canvas.height = img.height;
     const ctx = canvas.getContext('2d');
 
-    // Rellena el canvas con un color gris (la "capa" a raspar)
     ctx.fillStyle = '#C0C0C0';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Configura el modo para "borrar" con el pincel
     ctx.globalCompositeOperation = 'destination-out';
 
     let isDrawing = false;
 
-    // Calcula la posición del pincel en relación al canvas
     function getBrushPos(xRef, yRef) {
         const rect = canvas.getBoundingClientRect();
         return {
@@ -64,27 +57,31 @@ function initScratchCard() {
         };
     }
 
-    // Dibuja un círculo (pincel) en la posición dada
-    function drawDot(x, y) {
-        const brushRadius = 20;
+    function drawLine(x, y) {
+        ctx.lineWidth = 30;
+        ctx.lineCap = 'round';
         ctx.beginPath();
-        ctx.arc(x, y, brushRadius, 0, 2 * Math.PI, false);
-        ctx.fill();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        lastX = x;
+        lastY = y;
     }
 
-    // Funciones para manejar el "raspado"
+    let lastX, lastY;
+
     function scratchStart(e) {
         isDrawing = true;
-        const pos = getBrushPos(e.clientX, e.clientY);
-        drawDot(pos.x, pos.y);
-        checkIfCleared();
+        const pos = getBrushPos(e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY);
+        lastX = pos.x;
+        lastY = pos.y;
     }
 
     function scratchMove(e) {
         if (!isDrawing) return;
         e.preventDefault();
-        const pos = getBrushPos(e.clientX, e.clientY);
-        drawDot(pos.x, pos.y);
+        const pos = getBrushPos(e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY);
+        drawLine(pos.x, pos.y);
         checkIfCleared();
     }
 
@@ -92,44 +89,23 @@ function initScratchCard() {
         isDrawing = false;
     }
 
-    // Eventos para mouse
     canvas.addEventListener('mousedown', scratchStart);
     canvas.addEventListener('mousemove', scratchMove);
     canvas.addEventListener('mouseup', scratchEnd);
-    // Eventos para pantalla táctil
-    canvas.addEventListener('touchstart', function (e) {
-        e.preventDefault();
-        isDrawing = true;
-        const touch = e.touches[0];
-        const pos = getBrushPos(touch.clientX, touch.clientY);
-        drawDot(pos.x, pos.y);
-        checkIfCleared();
-    });
-    canvas.addEventListener('touchmove', function (e) {
-        e.preventDefault();
-        if (!isDrawing) return;
-        const touch = e.touches[0];
-        const pos = getBrushPos(touch.clientX, touch.clientY);
-        drawDot(pos.x, pos.y);
-        checkIfCleared();
-    });
-    canvas.addEventListener('touchend', function () {
-        isDrawing = false;
-    });
+    canvas.addEventListener('touchstart', scratchStart);
+    canvas.addEventListener('touchmove', scratchMove);
+    canvas.addEventListener('touchend', scratchEnd);
 
-    // Comprueba si se ha raspado más del 50%
     function checkIfCleared() {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         const pixels = imageData.data;
         let cleared = 0;
-        // Recorre la información de píxeles (cada 4 valores representan RGBA)
         for (let i = 3; i < pixels.length; i += 4) {
-            if (pixels[i] === 0) { // canal alfa = 0, borrado
+            if (pixels[i] === 0) {
                 cleared++;
             }
         }
         if (cleared / (canvas.width * canvas.height) > 0.5) {
-            // Cuando se borre el 50%: desvanecer y quitar el canvas
             canvas.style.transition = 'opacity 1s';
             canvas.style.opacity = '0';
             setTimeout(() => {
@@ -141,7 +117,7 @@ function initScratchCard() {
 }
 
 /*********************************
- * Mostrar notificación (ícono de carta)
+ * Mostrar notificación y carta
  *********************************/
 function showNotification() {
     document.getElementById('notification').style.display = 'block';
@@ -151,13 +127,10 @@ function showNotification() {
 const notificationSound = new Audio('assets/sounds/notification.mp3');
 notificationSound.volume = 0.5;
 
-// Al hacer clic en la notificación se muestra la carta
 document.getElementById('notification').addEventListener('click', function () {
     document.getElementById('letter-card').style.display = 'block';
 });
 
-// Botón para cerrar la carta
 document.getElementById('close-letter').addEventListener('click', function () {
     document.getElementById('letter-card').style.display = 'none';
 });
-
