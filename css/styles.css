@@ -7,9 +7,10 @@ body {
     overflow: hidden;
     font-family: Arial, sans-serif;
 }
+
 .font-custom {
     font-family: 'Dancing Script', cursive;
-  }
+}
 
 /* Fondo de corazones animados */
 #hearts-container {
@@ -51,14 +52,16 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    perspective: 1000px;
+    perspective: 1500px;
     z-index: 2;
+    margin: 2px;
 }
 
 #card {
-    width: 300px;
-    height: 200px;
+    width: 400px;
+    height: 300px;
     background-color: #fff;
+    opacity: 1;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -86,8 +89,8 @@ body {
 }
 
 #scratch-card img {
-    width: 300px;
-    height: 200px;
+    width: 400px;
+    height: 300px;
     border-radius: 10px;
     display: block;
 }
@@ -117,14 +120,15 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Tarjeta con la carta (con lorem ipsum) */
+/* Tarjeta con la carta */
 #letter-card {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: none;
-    width: 400px;
+    height: 500px;
+    width: 300px;
     background: #fff;
     border-radius: 10px;
     padding: 20px;

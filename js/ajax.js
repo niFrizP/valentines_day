@@ -65,26 +65,31 @@ function initScratchCard() {
     }
 
     // Dibuja un círculo (pincel) en la posición dada
-    function drawDot(x, y) {
-        const brushRadius = 20;
+    function drawLine(x, y) {
+        const brushWidth = 30; // Ajusta el grosor de la raya
+        ctx.lineWidth = brushWidth;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = 'rgba(0,0,0,1)'; // Color de raspado
         ctx.beginPath();
-        ctx.arc(x, y, brushRadius, 0, 2 * Math.PI, false);
-        ctx.fill();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(x, y);
+        ctx.stroke();
     }
 
     // Funciones para manejar el "raspado"
     function scratchStart(e) {
         isDrawing = true;
         const pos = getBrushPos(e.clientX, e.clientY);
-        drawDot(pos.x, pos.y);
-        checkIfCleared();
+        lastX = pos.x;
+        lastY = pos.y;
     }
 
     function scratchMove(e) {
         if (!isDrawing) return;
-        e.preventDefault();
         const pos = getBrushPos(e.clientX, e.clientY);
-        drawDot(pos.x, pos.y);
+        drawLine(pos.x, pos.y, lastX, lastY);
+        lastX = pos.x;
+        lastY = pos.y;
         checkIfCleared();
     }
 
@@ -102,7 +107,7 @@ function initScratchCard() {
         isDrawing = true;
         const touch = e.touches[0];
         const pos = getBrushPos(touch.clientX, touch.clientY);
-        drawDot(pos.x, pos.y);
+        drawLine(pos.x, pos.y);
         checkIfCleared();
     });
     canvas.addEventListener('touchmove', function (e) {
@@ -110,7 +115,7 @@ function initScratchCard() {
         if (!isDrawing) return;
         const touch = e.touches[0];
         const pos = getBrushPos(touch.clientX, touch.clientY);
-        drawDot(pos.x, pos.y);
+        drawLine(pos.x, pos.y);
         checkIfCleared();
     });
     canvas.addEventListener('touchend', function () {
@@ -129,7 +134,7 @@ function initScratchCard() {
             }
         }
         if (cleared / (canvas.width * canvas.height) > 0.5) {
-            // Más del 50% borrado: desvanecer y quitar el canvas
+            // Cuando se borre el 50%: desvanecer y quitar el canvas
             canvas.style.transition = 'opacity 1s';
             canvas.style.opacity = '0';
             setTimeout(() => {
@@ -145,7 +150,11 @@ function initScratchCard() {
  *********************************/
 function showNotification() {
     document.getElementById('notification').style.display = 'block';
+    notificationSound.play();
 }
+
+const notificationSound = new Audio('assets/sounds/notification.mp3');
+notificationSound.volume = 0.5;
 
 // Al hacer clic en la notificación se muestra la carta
 document.getElementById('notification').addEventListener('click', function () {
@@ -156,3 +165,4 @@ document.getElementById('notification').addEventListener('click', function () {
 document.getElementById('close-letter').addEventListener('click', function () {
     document.getElementById('letter-card').style.display = 'none';
 });
+

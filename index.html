@@ -15,66 +15,51 @@
 </head>
 
 <body class="bg-pink-100 overflow-hidden font-custom">
-    <script type="text/javascript" src="https://www.scmplayer.net/script.js"
-        data-config="{'skin':'https://static.tumblr.com/d41lcii/CPRmqwldp/skinflor.css','volume':50,'autoplay':true,'shuffle':true,'repeat':1,'placement':'top','showplaylist':false,'playlist':[{'title':'','url':'https://youtu.be/-9l5t3MWss8'},{'title':'','url':'https://youtu.be/Ao81ziiXHhs'}]}"></script>
-
     <!-- Contenedor de corazones flotantes -->
     <div id="hearts-container"></div>
 
-    <!-- Botón para activar música en móviles -->
-    <div id="music-button" class="fixed inset-0 flex items-center justify-center bg-pink-100 z-50">
-        <button class="bg-pink-500 text-white px-6 py-3 rounded-full text-xl">Toca para activar la música</button>
-    </div>
-
-
     <!-- Tarjeta inicial con mensaje -->
     <div id="card-container">
-        <div id="card">
-            <p>Feliz día de San Valentin Mi Amor 😘</p>
+        <div id="card" class="font-semibold text-xl">
+            <h1>Feliz día de San Valentin Mi Amor 😘</h1>
         </div>
+        <p>Oprima la tarjeta para más...</p>
     </div>
 
     <!-- Contenedor de la foto con efecto "scratch" -->
     <div id="scratch-card">
-        <img id="scratch-photo" src="ruta_a_tu_imagen.jpg" alt="Foto">
+        <img id="scratch-photo" src="assets/images/IMG_20220102_195601.jpg" alt="Foto">
         <canvas id="scratch-canvas"></canvas>
+        <p>Raspe la tarjeta</p>
     </div>
 
     <!-- Notificación con forma de carta -->
-    <div id="notification">
-        <div class="letter-icon">✉️</div>
+    <div id="notification" class="fixed bottom-5 right-5 z-30 hidden cursor-pointer">
+        <div class="text-4xl bg-white rounded-full p-2 shadow-lg sm:text-3xl sm:p-1 md:text-4xl md:p-2">✉️</div>
     </div>
 
-    <!-- Tarjeta con la carta (texto de ejemplo con lorem ipsum) -->
+    <!-- Tarjeta con la carta -->
     <div id="letter-card">
         <div class="letter-content">
-            <h2>Carta</h2>
+            <h2 class="font-semibold text-xl">Carta</h2>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat.
+                Estimada Miyarhay,
+                Lamento profundamente no poder estar a su lado en este día. Espero que pueda comprenderlo. Le pido
+                disculpas por mi falta de atención y preocupación. Esta carta no es para justificarme, sino para
+                expresar cuánto la estimo mi amor. Aunque la distancia nos separe, siempre la llevo en mi mente y
+                corazón. Me llena de alegría saber que hemos compartido tanto tiempo juntos, y pongo todo mi empeño en
+                mejorar para ser un mejor hombre para usted.
+                Valoro enormemente cada momento que paso a su lado y me emociona cada vez que la veo. La amo mucho y
+                seguiré haciéndolo por siempre.
+                Con respeto y cariño,
+                Nicolás. 💕
             </p>
-            <button id="close-letter">Cerrar</button>
+            <br>
+            <button id="close-letter"
+                class="fixed bg-pink-500 items-center text-white px-3 py-3 rounded-full text-xl">Cerrar</button>
         </div>
-    </div>
-    <script src="./js/ajax.js"></script>
-    <script>
-        // Detectar si es móvil
-        if (/Mobi|Android/i.test(navigator.userAgent)) {
-            const musicButton = document.getElementById('music-button');
+        <script src="./js/ajax.js"></script>
 
-            musicButton.addEventListener('click', function () {
-                // Oculta el botón al ser presionado
-                musicButton.classList.add('hidden');
-                // Inicializa el reproductor de música
-                SCMPlayer.init();  // Reemplaza esto con la forma correcta de inicializar SCMPlayer
-            });
-        } else {
-            // Si no es móvil, carga SCM Music Player automáticamente
-            SCMPlayer.init();  // Reemplaza esto con la forma correcta de inicializar SCMPlayer
-        }
-    </script>
 </body>
 
 </html>
