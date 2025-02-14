@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.ico" />
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Dancing Script -->
@@ -19,6 +20,12 @@
 
     <!-- Contenedor de corazones flotantes -->
     <div id="hearts-container"></div>
+
+    <!-- Botón para activar música en móviles -->
+    <div id="music-button" class="fixed inset-0 flex items-center justify-center bg-pink-100 z-50">
+        <button class="bg-pink-500 text-white px-6 py-3 rounded-full text-xl">Toca para activar la música</button>
+    </div>
+
 
     <!-- Tarjeta inicial con mensaje -->
     <div id="card-container">
@@ -52,6 +59,22 @@
         </div>
     </div>
     <script src="./js/ajax.js"></script>
+    <script>
+        // Detectar si es móvil
+        if (/Mobi|Android/i.test(navigator.userAgent)) {
+            const musicButton = document.getElementById('music-button');
+
+            musicButton.addEventListener('click', function () {
+                // Oculta el botón al ser presionado
+                musicButton.classList.add('hidden');
+                // Inicializa el reproductor de música
+                SCMPlayer.init();  // Reemplaza esto con la forma correcta de inicializar SCMPlayer
+            });
+        } else {
+            // Si no es móvil, carga SCM Music Player automáticamente
+            SCMPlayer.init();  // Reemplaza esto con la forma correcta de inicializar SCMPlayer
+        }
+    </script>
 </body>
 
 </html>
