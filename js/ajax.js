@@ -134,10 +134,7 @@ document.getElementById('close-letter').addEventListener('click', function () {
     document.getElementById('scratch-card').style.display = 'none';
     // Mostrar el video
     document.getElementById('video-container').classList.remove('hidden');
-
-    // Reproducir el video automáticamente
-    const video = document.getElementById('valentine-video');
-    video.play();
+    document.getElementById('valentine-video').src = "https://www.youtube.com/embed/qFh6AGHVInY?autoplay=1";
 });
 
 
