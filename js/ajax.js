@@ -1,11 +1,6 @@
-document.addEventListener('mousemove', (e) => {
-    document.body.style.setProperty('--x', e.clientX / window.innerWidth);
-    document.body.style.setProperty('--y', e.clientY / window.innerHeight);
-});
-
-/********************
+/*********************************
  * Corazones animados
- ********************/
+ *********************************/
 function createHeart() {
     const heart = document.createElement('div');
     heart.className = 'heart';
@@ -131,6 +126,92 @@ document.getElementById('notification').addEventListener('click', function () {
     document.getElementById('letter-card').style.display = 'block';
 });
 
+// Llamar a la función para cambiar la imagen cuando sea necesario
 document.getElementById('close-letter').addEventListener('click', function () {
+    // Ocultar la carta
     document.getElementById('letter-card').style.display = 'none';
+    // Ocultar el scratch-card
+    document.getElementById('scratch-card').style.display = 'none';
+    // Mostrar el video
+    document.getElementById('video-container').classList.remove('hidden');
+
+    // Reproducir el video automáticamente
+    const video = document.getElementById('valentine-video');
+    video.play();
 });
+
+
+/*********************************
+ * Movimiento del mouse y efectos de fondo
+ *********************************/
+document.addEventListener('mousemove', (e) => {
+    document.body.style.setProperty('--x', e.clientX / window.innerWidth);
+    document.body.style.setProperty('--y', e.clientY / window.innerHeight);
+});
+
+/*********************************
+ * Imágenes y rascar
+ *********************************/
+
+
+let currentImageIndex = 0;
+let scratchedPixels = 0;
+const totalPixels = 40000; // Aproximadamente el 50% de un canvas de 400x400
+
+function setupCanvas() {
+    const canvas = document.getElementById('scratchCanvas');
+    const ctx = canvas.getContext('2d');
+    const img = document.getElementById('scratch-photo');
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    ctx.fillStyle = '#C0C0C0';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = 'destination-out';
+
+    let isDrawing = false;
+    let lastX, lastY;
+
+    canvas.addEventListener('mousedown', (e) => {
+        isDrawing = true;
+        const { offsetX, offsetY } = getEventCoords(e);
+        lastX = offsetX;
+        lastY = offsetY;
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+        if (!isDrawing) return;
+        const { offsetX, offsetY } = getEventCoords(e);
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(offsetX, offsetY);
+        ctx.lineWidth = 30;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+        lastX = offsetX;
+        lastY = offsetY;
+        scratchedPixels += 1;
+        checkScratchCompletion();
+    });
+
+    canvas.addEventListener('mouseup', () => {
+        isDrawing = false;
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+        isDrawing = false;
+    });
+
+    function getEventCoords(e) {
+        const rect = canvas.getBoundingClientRect();
+        return { offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+    }
+
+    function checkScratchCompletion() {
+        if (scratchedPixels > totalPixels) {
+            revealImage();
+        }
+    }
+
+    console.log(images[currentImageIndex]); // Imprime la ruta de la imagen actual
+}

@@ -135,3 +135,23 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 4;
 }
+
+#scratchCard.fly-away {
+    transition: transform 1s;
+    transform: translateX(-100%);
+}
+
+#scratchCard.right {
+    transition: transform 1s;
+    transform: translateX(100%);
+}
+
+#scratchCard {
+    transition: transform 1s;
+    transform: translateX(0);
+}
+
+#image-container {
+    display: block;
+    margin: 20px;
+}

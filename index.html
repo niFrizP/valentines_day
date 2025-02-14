@@ -28,7 +28,7 @@
 
     <!-- Contenedor de la foto con efecto "scratch" -->
     <div id="scratch-card">
-        <img id="scratch-photo" src="assets/images/IMG_20220102_195601.jpg" alt="Foto">
+        <img id="scratch-photo" src="assets/images/IMG_20220102_195601.jpg" alt="image">
         <canvas id="scratch-canvas"></canvas>
         <p>Raspe la tarjeta</p>
     </div>
@@ -58,7 +58,18 @@
             <button id="close-letter"
                 class="fixed bg-pink-500 items-center text-white px-3 py-3 rounded-full text-xl">Cerrar</button>
         </div>
-        <script src="./js/ajax.js"></script>
+    </div>
+
+    <!-- Video oculto inicialmente -->
+    <div id="video-container" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-40">
+        <video id="valentine-video" controls class="max-h-[90vh] max-w-[90vw]">
+            <source src="assets/images/20250214_075121.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de videos.
+        </video>
+    </div>
+
+    <!-- Enlace a tu archivo JS -->
+    <script src="./js/ajax.js"></script>
 
 </body>
 
