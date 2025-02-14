@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Dancing Script -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <title>Feliz dia de San Valentin, Bebé</title>
+</head>
+
+<body class="bg-pink-100 overflow-hidden font-custom">
+    <script type="text/javascript" src="https://www.scmplayer.net/script.js"
+        data-config="{'skin':'https://static.tumblr.com/d41lcii/CPRmqwldp/skinflor.css','volume':50,'autoplay':true,'shuffle':true,'repeat':1,'placement':'top','showplaylist':false,'playlist':[{'title':'','url':'https://youtu.be/-9l5t3MWss8'},{'title':'','url':'https://youtu.be/Ao81ziiXHhs'}]}"></script>
+
+    <!-- Contenedor de corazones flotantes -->
+    <div id="hearts-container"></div>
+
+    <!-- Tarjeta inicial con mensaje -->
+    <div id="card-container">
+        <div id="card">
+            <p>Feliz día de San Valentin Mi Amor 😘</p>
+        </div>
+    </div>
+
+    <!-- Contenedor de la foto con efecto "scratch" -->
+    <div id="scratch-card">
+        <img id="scratch-photo" src="ruta_a_tu_imagen.jpg" alt="Foto">
+        <canvas id="scratch-canvas"></canvas>
+    </div>
+
+    <!-- Notificación con forma de carta -->
+    <div id="notification">
+        <div class="letter-icon">✉️</div>
+    </div>
+
+    <!-- Tarjeta con la carta (texto de ejemplo con lorem ipsum) -->
+    <div id="letter-card">
+        <div class="letter-content">
+            <h2>Carta</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua.
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat.
+            </p>
+            <button id="close-letter">Cerrar</button>
+        </div>
+    </div>
+    <script src="./js/ajax.js"></script>
+</body>
+
+</html>

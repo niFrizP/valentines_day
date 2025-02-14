@@ -1,0 +1,133 @@
+/* Estilos generales */
+body {
+    background-color: #e972a2;
+    /* fondo rosado pastel */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+.font-custom {
+    font-family: 'Dancing Script', cursive;
+  }
+
+/* Fondo de corazones animados */
+#hearts-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.heart {
+    position: absolute;
+    font-size: 24px;
+    animation: floatUp 8s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Tarjeta inicial */
+#card-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    perspective: 1000px;
+    z-index: 2;
+}
+
+#card {
+    width: 300px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+}
+
+/* Cuando se hace clic, la tarjeta gira */
+#card.flipped {
+    transform: rotateY(180deg);
+}
+
+/* Scratch card: foto con canvas superpuesto */
+#scratch-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 2;
+}
+
+#scratch-card img {
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    display: block;
+}
+
+#scratch-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+}
+
+/* Notificación en forma de carta */
+#notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    z-index: 3;
+    cursor: pointer;
+}
+
+.letter-icon {
+    font-size: 40px;
+    background: #fff;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Tarjeta con la carta (con lorem ipsum) */
+#letter-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    width: 400px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 4;
+}
